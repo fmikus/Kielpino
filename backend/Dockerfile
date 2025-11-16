@@ -12,7 +12,7 @@ WORKDIR /build/backend
 RUN go mod download
 
 # Build
-RUN CGO_ENABLED=0 GOOS=linux go build -o /build/api ./cmd/api/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o ../api cmd/api/main.go
 
 # Run stage
 FROM alpine:latest
