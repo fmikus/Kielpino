@@ -3,15 +3,14 @@ FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
 
-# Copy go mod files
-COPY backend/go.mod backend/go.sum* ./
-RUN go mod download
-
 # Copy backend source code
 COPY backend/ .
 
+# Download dependencies
+RUN go mod download
+
 # Build
-RUN CGO_ENABLED=0 GOOS=linux go build -o api cmd/api/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o api ./cmd/api/main.go
 
 # Run stage
 FROM alpine:latest
