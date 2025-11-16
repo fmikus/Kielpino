@@ -30,9 +30,14 @@ func main() {
 
 	// CORS configuration
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000", "https://*.vercel.app"}
+	config.AllowOrigins = []string{"http://localhost:3000"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept"}
+	config.AllowOriginFunc = func(origin string) bool {
+		// Allow localhost and all Vercel domains
+		return origin == "http://localhost:3000" ||
+			   len(origin) > 11 && origin[len(origin)-11:] == ".vercel.app"
+	}
 	r.Use(cors.New(config))
 
 	// Health check
