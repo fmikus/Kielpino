@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 import type { NewsItem } from "@/types/news";
@@ -11,6 +12,11 @@ const categoryColors: Record<string, string> = {
   "Ogłoszenia": "bg-blue-100 text-blue-800",
   "Wydarzenia": "bg-purple-100 text-purple-800",
   "Infrastruktura": "bg-green-100 text-green-800",
+  "Transport": "bg-indigo-100 text-indigo-800",
+  "Sport": "bg-orange-100 text-orange-800",
+  "Inwestycje": "bg-teal-100 text-teal-800",
+  "Kultura": "bg-pink-100 text-pink-800",
+  "Społeczność": "bg-amber-100 text-amber-800",
   "default": "bg-gray-100 text-gray-800",
 };
 
@@ -22,7 +28,17 @@ export default function NewsCard({ news }: NewsCardProps) {
       <div className="md:flex">
         {/* Image Section */}
         <div className="md:w-80 md:flex-shrink-0">
-          {news.coverImage && (
+          {news.coverImage ? (
+            <div className="relative h-48 md:h-full w-full overflow-hidden">
+              <Image
+                src={news.coverImage}
+                alt={news.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 100vw, 320px"
+              />
+            </div>
+          ) : (
             <div className="relative h-48 md:h-full w-full bg-gradient-to-br from-green-100 via-green-50 to-blue-50 flex items-center justify-center overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 to-blue-400/10 group-hover:scale-110 transition-transform duration-500"></div>
               <div className="text-center p-6 relative z-10">

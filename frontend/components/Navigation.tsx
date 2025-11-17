@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useFontSize } from "@/lib/useFontSize";
 
 const navItems = [
   { href: "/", label: "Aktualności" },
@@ -14,6 +15,7 @@ const navItems = [
 export default function Navigation() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { decreaseFontSize, resetFontSize, increaseFontSize, fontSize } = useFontSize();
 
   return (
     <>
@@ -36,9 +38,36 @@ export default function Navigation() {
               </span>
             </div>
             <div className="hidden md:flex items-center space-x-4">
-              <button className="text-xs hover:text-green-200">A-</button>
-              <button className="text-sm hover:text-green-200">A</button>
-              <button className="text-base hover:text-green-200">A+</button>
+              <button
+                onClick={decreaseFontSize}
+                className={`text-xs transition-colors ${
+                  fontSize === "small" ? "text-green-200 font-bold" : "hover:text-green-200"
+                }`}
+                aria-label="Zmniejsz rozmiar czcionki"
+                title="Zmniejsz rozmiar czcionki"
+              >
+                A-
+              </button>
+              <button
+                onClick={resetFontSize}
+                className={`text-sm transition-colors ${
+                  fontSize === "medium" ? "text-green-200 font-bold" : "hover:text-green-200"
+                }`}
+                aria-label="Domyślny rozmiar czcionki"
+                title="Domyślny rozmiar czcionki"
+              >
+                A
+              </button>
+              <button
+                onClick={increaseFontSize}
+                className={`text-base transition-colors ${
+                  fontSize === "large" ? "text-green-200 font-bold" : "hover:text-green-200"
+                }`}
+                aria-label="Zwiększ rozmiar czcionki"
+                title="Zwiększ rozmiar czcionki"
+              >
+                A+
+              </button>
             </div>
           </div>
         </div>
@@ -114,6 +143,44 @@ export default function Navigation() {
                 </li>
               ))}
             </ul>
+            <div className="container mx-auto px-4 pb-4">
+              <div className="flex items-center justify-center space-x-6 pt-2 border-t">
+                <span className="text-sm text-gray-600">Rozmiar czcionki:</span>
+                <button
+                  onClick={decreaseFontSize}
+                  className={`text-xs px-3 py-2 rounded transition-colors ${
+                    fontSize === "small"
+                      ? "bg-green-600 text-white font-bold"
+                      : "bg-gray-100 text-gray-700 hover:bg-green-50"
+                  }`}
+                  aria-label="Zmniejsz rozmiar czcionki"
+                >
+                  A-
+                </button>
+                <button
+                  onClick={resetFontSize}
+                  className={`text-sm px-3 py-2 rounded transition-colors ${
+                    fontSize === "medium"
+                      ? "bg-green-600 text-white font-bold"
+                      : "bg-gray-100 text-gray-700 hover:bg-green-50"
+                  }`}
+                  aria-label="Domyślny rozmiar czcionki"
+                >
+                  A
+                </button>
+                <button
+                  onClick={increaseFontSize}
+                  className={`text-base px-3 py-2 rounded transition-colors ${
+                    fontSize === "large"
+                      ? "bg-green-600 text-white font-bold"
+                      : "bg-gray-100 text-gray-700 hover:bg-green-50"
+                  }`}
+                  aria-label="Zwiększ rozmiar czcionki"
+                >
+                  A+
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </nav>
